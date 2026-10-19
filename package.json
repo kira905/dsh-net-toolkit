@@ -1,0 +1,54 @@
+{
+  "name": "@kira905/dsh-net-toolkit",
+  "version": "0.1.0",
+  "description": "Networking & cross-host helpers for DeepSeek Harness (DSH): Clash Verge core control with automatic node selection, Wake-on-LAN send + wake observation, a zero-dependency Chrome DevTools Protocol client, page network capture, and an OpenAI-compatible bridge for ComfyUI. Zero third-party runtime dependencies.",
+  "license": "AGPL-3.0-only",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "dsh-wol": "dsh-wol.mjs",
+    "dsh-cdp": "dsh-cdp.mjs",
+    "dsh-cdp-net-capture": "cdp-net-capture.mjs",
+    "dsh-openai-bridge": "openai-bridge.mjs"
+  },
+  "files": [
+    "dsh-proxy.ps1",
+    "dsh-wol.mjs",
+    "dsh-cdp.mjs",
+    "cdp-net-capture.mjs",
+    "openai-bridge.mjs",
+    "bridge-models.example.json",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "networking",
+    "wake-on-lan",
+    "wol",
+    "cdp",
+    "chrome-devtools-protocol",
+    "clash-verge",
+    "proxy",
+    "comfyui",
+    "openai-compatible",
+    "image-generation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kira905/dsh-net-toolkit.git"
+  },
+  "homepage": "https://github.com/kira905/dsh-net-toolkit#readme",
+  "bugs": {
+    "url": "https://github.com/kira905/dsh-net-toolkit/issues"
+  }
+}

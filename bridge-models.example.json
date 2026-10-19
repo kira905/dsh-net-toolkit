@@ -1,0 +1,27 @@
+{
+  "models": [
+    {
+      "id": "sd15",
+      "checkpoint": "v1-5-pruned-emaonly-fp16.safetensors",
+      "steps": 25,
+      "cfg": 7,
+      "sampler": "euler",
+      "scheduler": "normal",
+      "positive": "",
+      "negative": ""
+    },
+    {
+      "id": "sdxl-base",
+      "checkpoint": "sd_xl_base_1.0.safetensors",
+      "steps": 28,
+      "cfg": 6,
+      "sampler": "euler",
+      "scheduler": "normal",
+      "positive": "masterpiece, best quality",
+      "negative": "lowres, bad anatomy, bad hands, text, watermark",
+      "ipadapter": "ip-adapter-plus_sdxl_vit-h.safetensors",
+      "clip_vision": "clip_vision_h.safetensors",
+      "ipadapter_weight": 0.8
+    }
+  ]
+}

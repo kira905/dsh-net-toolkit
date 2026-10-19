@@ -1,0 +1,19 @@
+node_modules/
+*.log
+*.tmp
+*.bak
+*.bak-*
+.DS_Store
+Thumbs.db
+_tmp/
+_archive/
+snapshots/
+backups/
+generated/
+logs/
+coverage/
+*.tgz
+# 本机真实模型清单（示例见 bridge-models.example.json）
+bridge-models.json
+# 运行期数据
+*.db
