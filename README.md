@@ -1,5 +1,33 @@
 # dsh-net-toolkit · DSH 网络与跨机小工具
 
+> **本仓是命令行工具，不挂宿主界面，不需要 `dsh.bundle`、不需要写 `cordis.patch.yml`。** 装它 = `npm i -g @kira905/dsh-net-toolkit`（或 `npx -p @kira905/dsh-net-toolkit dsh-wol`）。装进 profile 也对，但那条 `declares no dsh.bundle` 警告是**正常现象**，不是故障。
+
+## 装完自检（三条只读验法）
+
+`<profile>` 换成你实际用的 profile（默认 `web`），`<数据根>` 换成你的 DSH 数据根（默认 `~/.dsh`）。
+
+```powershell
+# ① 组合树里有没有它（只读、约 0.6 秒、不启服务）
+dsh --profile <profile> --dump-config | Select-String "dsh-net-toolkit"
+# 期望：bundle 层出现一行 "# == <登记名>"、insert 层出现 "- id: <entry>"（问的都是「它挂上没」）；
+#       本仓包名 @kira905/dsh-net-toolkit —— 带 scope 装的写带 scope 名、老工装 / 手写的可能是裸名，两种都搜一遍
+#       ⚠️ 若该包会 insert 一行，还要数一遍"同一个 id 出现了几次"，必须 == 1
+
+# ② 组合列表里有没有它（只读）
+Get-Content <数据根>/profiles/<profile>/package.json | Select-String "@kira905/dsh-net-toolkit"
+# 期望：dependencies 与 dsh.profile.bundles 两处都有（CLI 类只需要 dependencies；bundles 里也可能写裸名 dsh-net-toolkit）
+
+# ③ 命令在不在 —— 【只查存在，不执行】
+Test-Path <数据根>/profiles/<profile>/node_modules/.bin/dsh-wol.CMD   # 装进 profile 的
+Test-Path "$env:APPDATA\npm\dsh-wol.CMD"                           # npm i -g 装的
+# 期望：True。两条路径按你实际用的装法挑一条
+```
+
+> 探针只做存在性检查（只看命令文件在不在，不执行任何命令）。
+> 要不要用 `--help` 验，见本仓当前说明与该命令的参数表。
+
+---
+
 > DeepSeek Harness（DSH）生态里**天天在用的五件网络/跨机工具**：
 > **代理自控**（Clash Verge 核心起停 + 自动挑可用节点）、
 > **Wake-on-LAN 唤醒 + 唤醒观测**、
