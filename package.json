@@ -1,6 +1,6 @@
 {
   "name": "@kira905/dsh-net-toolkit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Networking & cross-host helpers for DeepSeek Harness (DSH): Clash Verge core control with automatic node selection, Wake-on-LAN send + wake observation, a zero-dependency Chrome DevTools Protocol client, page network capture, and an OpenAI-compatible bridge for ComfyUI. Zero third-party runtime dependencies.",
   "license": "AGPL-3.0-only",
   "private": false,
