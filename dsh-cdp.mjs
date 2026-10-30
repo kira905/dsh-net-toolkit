@@ -6,10 +6,29 @@
 //   node dsh-cdp.mjs eval-file <含 JS 的文件路径>
 //   node dsh-cdp.mjs nav <url>
 import fs from 'node:fs';
+import { cliGuard } from './lib/cli-args.mjs';
+
+const SPEC = {
+  cmd: 'dsh-cdp',
+  summary: '零依赖 CDP 客户端：连本机 9222 端口上的 Chrome，列页面 / 在页面里执行 JS / 让页面跳转。',
+  usage: 'dsh-cdp [list|eval|eval-file|nav] [参数]',
+  commands: [
+    { name: 'list', desc: '列出可用的页面目标（默认动作）' },
+    { name: 'eval', desc: 'eval "<JS 表达式>"：在页面里执行一段 JS，把结果打回来' },
+    { name: 'eval-file', desc: 'eval-file <文件>：执行文件里的 JS' },
+    { name: 'nav', desc: 'nav <url>：让页面跳到该地址' },
+  ],
+  positional: [{ name: '[参数]', desc: '取决于子命令：JS 表达式 / JS 文件路径 / URL' }],
+  env: [{ name: 'CDP_PORT', desc: 'Chrome 调试端口，默认 9222' }],
+  writes: '不写盘、不改任何配置。但 eval / eval-file 会在目标页面里真的执行你给的 JS（若有副作用就真有副作用），nav 会让页面真的跳转。',
+  exits: '0 成功 · 1 连接或执行失败 · 2 参数错误',
+  examples: ['dsh-cdp list', 'dsh-cdp eval "document.title"'],
+};
 
 const PORT = Number(process.env.CDP_PORT || 9222);
-const mode = process.argv[2] || 'list';
-const arg = process.argv[3] || '';
+const CDP_ARGV = cliGuard(SPEC);
+const mode = CDP_ARGV[0] || 'list';
+const arg = CDP_ARGV[1] || '';
 
 async function listTargets() {
   const r = await fetch(`http://127.0.0.1:${PORT}/json/list`);

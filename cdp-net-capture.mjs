@@ -1,6 +1,26 @@
 // 只读：连独立 Chrome(9222) 抓 25 秒网络请求 + 控制台报错，对比改动前后的轮询频率
+import { cliGuard } from './lib/cli-args.mjs';
+
 const PORT = Number(process.env.CDP_PORT || 9222);
-const argv = process.argv.slice(2);
+const SPEC = {
+  cmd: 'dsh-cdp-net-capture',
+  summary: '只读网络取证：连独立 Chrome（9222）抓一段时间内的网络请求与控制台报错，用来对比改动前后的轮询频率。',
+  usage: 'dsh-cdp-net-capture [url] [秒数] [--click <选择器>] [--settle 12] [--emulate-visible]',
+  flags: [
+    { name: '--click', arg: 'CSS选择器', desc: '观测窗口开始前先在页面里点一下这个元素' },
+    { name: '--settle', arg: '秒', desc: '点击后等多少秒再开始统计，默认 12' },
+    { name: '--emulate-visible', desc: '把页面当成前台可见（防 visibilityState=hidden 改变客户端连接行为）' },
+  ],
+  positional: [
+    { name: '[url]', desc: '要观测的页面，默认本机 3080 首页' },
+    { name: '[秒数]', desc: '观测窗口，默认 25 秒' },
+  ],
+  env: [{ name: 'CDP_PORT', desc: 'Chrome 调试端口，默认 9222' }],
+  writes: '不写盘、不改配置：只读页面网络与控制台，结果打到 stdout。会打开 / 点击目标页（该页自身的网络行为照常发生）。',
+  exits: '0 成功 · 1 连不上 Chrome 或页面出错 · 2 参数错误',
+  examples: ['dsh-cdp-net-capture', 'dsh-cdp-net-capture http://127.0.0.1:3080/ 10'],
+};
+const argv = cliGuard(SPEC);
 const flagValue = (name, fallback) => {
   const i = argv.indexOf(name);
   return i >= 0 && argv[i + 1] !== undefined ? argv[i + 1] : fallback;

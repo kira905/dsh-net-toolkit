@@ -7,6 +7,22 @@ import http from 'node:http';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { cliGuard } from './lib/cli-args.mjs';
+
+const SPEC = {
+  cmd: 'dsh-openai-bridge',
+  summary: 'ComfyUI 的 OpenAI 兼容桥：把 /v1/images/generations 请求翻译成 ComfyUI 工作流（长驻 HTTP 服务）。',
+  usage: 'dsh-openai-bridge [--port 8199] [--comfy http://127.0.0.1:8188]',
+  flags: [
+    { name: '--port', arg: 'N', desc: '本桥监听端口，默认 8199' },
+    { name: '--comfy', arg: 'url', desc: 'ComfyUI 地址，默认 http://127.0.0.1:8188' },
+  ],
+  notes: ['模型配置读同目录的 bridge-models.json（从 bridge-models.example.json 复制改名）'],
+  writes: '会起一个常驻 HTTP 服务占住端口（Ctrl+C 结束）；不写本机文件，只转发请求给 ComfyUI。',
+  exits: '0 正常结束 · 1 启动失败（端口占用 / 配置缺失） · 2 参数错误',
+  examples: ['dsh-openai-bridge', 'dsh-openai-bridge --port 8299'],
+};
+cliGuard(SPEC);
 
 const pi = process.argv.indexOf('--port');
 const ci = process.argv.indexOf('--comfy');

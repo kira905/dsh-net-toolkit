@@ -18,6 +18,7 @@
     "dsh-openai-bridge": "openai-bridge.mjs"
   },
   "files": [
+    "lib/",
     "dsh-proxy.ps1",
     "dsh-wol.mjs",
     "dsh-cdp.mjs",
