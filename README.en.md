@@ -1,5 +1,30 @@
 # dsh-net-toolkit · Networking & cross-host helpers for DSH
 
+> ### What this is
+> **Four networking and cross-host helpers**: proxy control, Wake-on-LAN, a zero-dependency CDP client, page network capture, and an OpenAI-compatible bridge for ComfyUI.
+>
+> ### What it solves
+> All four exist because a real task needed them: wake the remote box up (WOL); capture a page's network requests without installing a browser-automation stack (own CDP client, zero dependencies); make a local image-generation stack answer the OpenAI protocol so any client can call it (a small bridge).
+>
+> ### Run it in one command
+> ```powershell
+> npm i -g @kira905/dsh-net-toolkit
+> dsh-wol --mac AA-BB-CC-DD-EE-FF --ip 203.0.113.10 --watch 90    # send magic packets, watch for the wake
+> ```
+>
+> ### Real output
+> ```text
+> dsh-wol.mjs — send WOL magic packets and observe the wake (read-only)
+>   --mac <MAC>       target NIC MAC (required, e.g. AA-BB-CC-DD-EE-FF)
+>   --ip <IP>         target IP (required, e.g. 203.0.113.10)
+>   --rounds <N>      rounds (default 3, broadcast + unicast each round)
+>   --watch <sec>     observation window after sending (default 90)
+> ```
+>
+> ⚠️ The three phone-channel pieces (internal addresses, tunnel and credential handling) are **not open-sourced** — reasons are in README §4.
+
+---
+
 > Five everyday networking / cross-host tools from the DeepSeek Harness (DSH) ecosystem:
 > **proxy self-control** (start/stop the Clash Verge core, pick a working node automatically),
 > **Wake-on-LAN send + wake observation**, a **zero-dependency CDP client** (run JS / navigate in
