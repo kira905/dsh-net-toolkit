@@ -1,5 +1,30 @@
 # dsh-net-toolkit · DSH 网络与跨机小工具
 
+> ### 这是什么
+> **网络与跨机四件**：代理控制、Wake-on-LAN、零依赖 CDP 客户端、页面抓包，外加一个给 ComfyUI 用的 OpenAI 兼容桥。
+>
+> ### 它解决什么
+> 都是"为了把活干完顺手写的"：远程那台机睡着了要按一下（WOL）；要抓一个页面的网络请求，不想为此装一整套浏览器自动化（自带 CDP 客户端，零依赖）；本地生图栈对外只认 OpenAI 协议（一个小桥让它被任何客户端调用）。
+>
+> ### 一条命令跑起来
+> ```powershell
+> npm i -g @kira905/dsh-net-toolkit
+> dsh-wol --mac AA-BB-CC-DD-EE-FF --ip 203.0.113.10 --watch 90    # 发魔术包并观测是否醒来
+> ```
+>
+> ### 先看它长什么样（真实输出）
+> ```text
+> dsh-wol.mjs —— 发 WOL 魔术包并观测唤醒结果（只读）
+>   --mac <MAC>       目标网卡 MAC（必填，例 AA-BB-CC-DD-EE-FF）
+>   --ip <IP>         目标 IP（必填，例 203.0.113.10）
+>   --rounds <N>      发包轮数（默认 3，每轮广播+单播各一次）
+>   --watch <秒>      发包后观测时长（默认 90 秒）
+> ```
+>
+> ⚠️ 含内网地址、隧道与凭据口径的三个手机通道件**没有开源**（理由写在仓内 README §4）。
+
+---
+
 > **本仓是命令行工具，不挂宿主界面，不需要 `dsh.bundle`、不需要写 `cordis.patch.yml`。** 装它 = `npm i -g @kira905/dsh-net-toolkit`（或 `npx -p @kira905/dsh-net-toolkit dsh-wol`）。装进 profile 也对，但那条 `declares no dsh.bundle` 警告是**正常现象**，不是故障。
 
 ## 装完自检（三条只读验法）
